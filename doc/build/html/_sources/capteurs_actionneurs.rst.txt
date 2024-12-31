@@ -1,0 +1,50 @@
+Services
+========================
+
+Cette partie traite des différents services présents dans OpenPilot. 
+
+Capteurs et actionneurs
+------------------------
+
+- **camerad** *(/system/camerad)*: Gère à la fois la caméra de la route et la caméra du conducteur (ainsi qu'une caméra supplémentaire grand angle pour la route sur le comma three), et prend en charge l'autofocus et l'autoexposition. 
+- **sensod** *(/system/sensord)*:  Configure et lit les autres capteurs (gyroscope, accéléromètre, magnétomètre et capteurs de lumière).
+
+Réseaux de neurones
+------------------------
+
+- **modeld** *(/selfdrive/modeld/modeld.py)*: Lit le flux d'images de visionipc (système de communication inter-processus pour échanger des images) dans le réseau de neurones principal de conduite. En utilisant ces données ainsi que les entrées de désir (changement de voie, etc.), le réseau de neurones tente de prédire où et comment conduire, dans les conditions données. *modeld* exécute le modèle supercombo, qui génère le chemin de conduite souhaité ainsi que d'autres métadonnées, y compris les lignes de voie, les voitures en tête, les bords de la route, et plus encore.
+- **dmonitoringmodeld** *(/selfdrive/modeld/dmonitoringmodeld.py)*: Ce service exécute le dmonitoring_model en utilisant le flux d'images de la caméra orientée vers le conducteur et prédit la posture de la tête du conducteur, si ses yeux sont ouverts ou fermés, et s'il porte des lunettes de soleil. Cela permet de savoir que le conducteur est toujours attentif et qu'il est capable de reprendre la main à tout moment.
+- **dmonitorind** *(/selfdrive/monitoring/monitoring.py)*: Ce service contient la logique permettant d’évaluer si le conducteur peut reprendre le contrôle si nécessaire. Sinon, il alerte le conducteur. Cette décision est basée sur les sorties du modèle de surveillance du conducteur, les informations sur la scène provenant du modèle de conduite, et quelques autres paramètres. Les conducteurs sont empêchés d'engager OpenPilot s'ils ont été distraits pendant de longues périodes.
+
+Localisation et calibration
+----------------------------
+
+- **ubloxd** *(/system/ubloxd)*: Ce service analyse les données GNSS, qui sont ensuite utilisées pour la localisation.
+- **locationd** *(/selfdrive/locationd/locationd.py)*: Ce service est responsable de la localisation de la voiture dans le monde. La localisation est une étape essentielle pour décrire avec précision l'état de la voiture et son interaction avec le monde. C'est ainsi qu'OpenPilot connaît la vitesse, la présence d'un virage incliné ou si d'une pente. Ces données provenant de plusieurs capteurs sont combinées avec un filtre de Kalman (live_kf). Ce localisateur fournit la position, l'orientation, la vitesse, la vitesse angulaire et l'accélération de la voiture.
+- **calibrationd** *(/selfdrive/locationd/calibrationd.py)*: L'entrée du modèle de conduite neuronal est transformée dans le cadre calibré, qui est aligné avec l'inclinaison et le lacet du véhicule. Cela normalise le flux d'images pour tenir compte des différentes façons dont les utilisateurs montent leurs appareils sur leurs pare-brises.
+- **Paramsd** *(/selfdrive/locationd/paramds.py)*: Il existe de nombreux paramètres spécifiques aux modèles de voitures (masse, rapport de direction, rigidité des pneus, décalage de direction, distance du centre de masse à l'axe des roues, etc.) qui sont nécessaires pour convertir un trajet de conduite en signaux que la voiture comprend, comme l'angle de direction. Une grande partie de ces paramètres sont codés en durs et sont considérés comme des constantes. Cependant, certains de ces paramètres sont soit inexactes, changent au cours de la vie d'une voiture, ou même pendant une conduite en fonction des conditions de la route. Il est donc nécessaire d'estimer précisément ces paramètres pour mieux contrôler la façon dont la voiture réagit aux entrées. Nous utilisons un filtre de Kalman (car_kf) pour cela, en supposant un modèle de véhicule à voie unique.
+
+Contrôle
+------------------------
+
+- **radard** *(/selfdrive/controls/radar.py)*: Ce service interprète les données brutes provenant des différents radars présents sur les modèles de voitures et les convertit en un format canonique.
+- **plannerd** *(/selfdrive/controls/plannerd.py)*: La planification est séparée en deux parties : la planification latérale (direction) et la planification longitudinale (accélérateur/frein). Les deux utilisent un résolveur MPC (Contrôle Prédictif Modélisé) pour garantir que les plans soient fluides et optimisent des coûts raisonnables. Le réseau neuronal de conduite prédit où la voiture devrait être, mais le planificateur latéral détermine comment y parvenir. En utilisant la prédiction de trajectoire du réseau neuronal (et parfois la prédiction des lignes de voie), et un résolveur MPC, le planificateur latéral estime combien la voiture doit tourner (courbure) dans les prochaines secondes.La planification longitudinale dépend encore principalement des voitures de tête. Elle prend les estimations fusionnées (réseau neuronal + radar) des voitures de tête et la vitesse cible souhaitée, les insère dans un résolveur MPC, et calcule un bon profil d'accélération pour les prochaines secondes.
+- **controlsd** *(/selfdrive/controls/controlsd.py)*: C'est le service qui contrôle réellement la voiture. Il reçoit le plan du service *plannerd*, sous forme de courbures et de vitesses/accélérations, et le convertit en signaux de contrôle. Ces cibles agnostiques au véhicule (accélération et angle de direction) sont ensuite converties en commandes CAN spécifiques au véhicule, qui fonctionnent avec l'API de cette voiture, à travers un système de contrôle en boucle fermée qui fonctionne à 100Hz. Controlsd analyse également les données brutes du CAN de la voiture et les publie dans un format canonique.
+
+Sevices systèmes, journalisation et divers
+-------------------------------------------
+
+- **manager** *(/system/manager)*: Ce service gère le démarrage et l'arrêt de tous les processus décrits ci-dessus.
+- **loggerd/ logcatd/ proclogd** *(/system/)*: Ces services gèrent l'enregistrement de tous les logs d'openpilot. Les données vidéo compressées et les données des capteurs sont enregistrées comme données d'entraînement, afin de continuer à améliorer les réseaux neuronaux. Tous les messages Cereal, rapports de plantage système, etc. sont également enregistrés afin de comprendre et de résoudre les pannes.
+- **athenad** *(/system/athenad)*: Etablit une connexion websocket avec les serveurs comma.ai et gère toutes les demandes liées au dispositif venant de connect.comma.ai. Le dispositif peut être atteint en envoyant des appels API REST à athena.comma.ai. Exemples d'appels API possibles : demander la tension de la batterie, définir une destination de navigation, obtenir la localisation de la voiture ou des demandes pour télécharger des fichiers.
+- **ui** *(/selfdrive/ui)*: Ce service gère tout ce qui est affiché à l'utilisateur. Lorsque la voiture est éteinte, il contient un guide de formation pour intégrer les nouveaux utilisateurs, affiche l'état du système et expose certains paramètres. Lorsque la voiture est allumée, le flux de la caméra orientée vers la route est affiché avec des visualisations superposées du chemin de conduite, des lignes de voie et des voitures de tête.
+
+
+
+
+
+
+
+
+
+

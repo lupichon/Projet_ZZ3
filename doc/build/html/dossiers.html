@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services &mdash; Documentation Documentation Openpilot 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7a28dfa3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Services" href="capteurs_actionneurs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Documentation Openpilot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Comment fonctionne OpenPilot ?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="capteurs_actionneurs.html">Services</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Dossiers</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#capteurs-et-actionneurs">Capteurs et actionneurs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reseaux-de-neurones">Réseaux de neurones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#localisation-et-calibration">Localisation et calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#controle">Contrôle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sevices-systemes-journalisation-et-divers">Sevices systèmes, journalisation et divers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Documentation Openpilot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Services</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dossiers.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="services">
+<h1>Services<a class="headerlink" href="#services" title="Lien vers cette rubrique"></a></h1>
+<p>Cette partie traite des différents services présents dans OpenPilot.</p>
+<section id="capteurs-et-actionneurs">
+<h2>Capteurs et actionneurs<a class="headerlink" href="#capteurs-et-actionneurs" title="Lien vers cette rubrique"></a></h2>
+<ul class="simple">
+<li><p><strong>camerad</strong> <em>(/system/camerad)</em>: Gère à la fois la caméra de la route et la caméra du conducteur (ainsi qu’une caméra supplémentaire grand angle pour la route sur le comma three), et prend en charge l’autofocus et l’autoexposition.</p></li>
+<li><p><strong>sensod</strong> <em>(/system/sensord)</em>:  Configure et lit les autres capteurs (gyroscope, accéléromètre, magnétomètre et capteurs de lumière).</p></li>
+</ul>
+</section>
+<section id="reseaux-de-neurones">
+<h2>Réseaux de neurones<a class="headerlink" href="#reseaux-de-neurones" title="Lien vers cette rubrique"></a></h2>
+<ul class="simple">
+<li><p><strong>modeld</strong> <em>(/selfdrive/modeld/modeld.py)</em>: Lit le flux d’images de visionipc (système de communication inter-processus pour échanger des images) dans le réseau de neurones principal de conduite. En utilisant ces données ainsi que les entrées de désir (changement de voie, etc.), le réseau de neurones tente de prédire où et comment conduire, dans les conditions données. <em>modeld</em> exécute le modèle supercombo, qui génère le chemin de conduite souhaité ainsi que d’autres métadonnées, y compris les lignes de voie, les voitures en tête, les bords de la route, et plus encore.</p></li>
+<li><p><strong>dmonitoringmodeld</strong> <em>(/selfdrive/modeld/dmonitoringmodeld.py)</em>: Ce service exécute le dmonitoring_model en utilisant le flux d’images de la caméra orientée vers le conducteur et prédit la posture de la tête du conducteur, si ses yeux sont ouverts ou fermés, et s’il porte des lunettes de soleil. Cela permet de savoir que le conducteur est toujours attentif et qu’il est capable de reprendre la main à tout moment.</p></li>
+<li><p><strong>dmonitorind</strong> <em>(/selfdrive/monitoring/monitoring.py)</em>: Ce service contient la logique permettant d’évaluer si le conducteur peut reprendre le contrôle si nécessaire. Sinon, il alerte le conducteur. Cette décision est basée sur les sorties du modèle de surveillance du conducteur, les informations sur la scène provenant du modèle de conduite, et quelques autres paramètres. Les conducteurs sont empêchés d’engager OpenPilot s’ils ont été distraits pendant de longues périodes.</p></li>
+</ul>
+</section>
+<section id="localisation-et-calibration">
+<h2>Localisation et calibration<a class="headerlink" href="#localisation-et-calibration" title="Lien vers cette rubrique"></a></h2>
+<ul class="simple">
+<li><p><strong>ubloxd</strong> <em>(/system/ubloxd)</em>: Ce service analyse les données GNSS, qui sont ensuite utilisées pour la localisation.</p></li>
+<li><p><strong>locationd</strong> <em>(/selfdrive/locationd/locationd.py)</em>: Ce service est responsable de la localisation de la voiture dans le monde. La localisation est une étape essentielle pour décrire avec précision l’état de la voiture et son interaction avec le monde. C’est ainsi qu’OpenPilot connaît la vitesse, la présence d’un virage incliné ou si d’une pente. Ces données provenant de plusieurs capteurs sont combinées avec un filtre de Kalman (live_kf). Ce localisateur fournit la position, l’orientation, la vitesse, la vitesse angulaire et l’accélération de la voiture.</p></li>
+<li><p><strong>calibrationd</strong> <em>(/selfdrive/locationd/calibrationd.py)</em>: L’entrée du modèle de conduite neuronal est transformée dans le cadre calibré, qui est aligné avec l’inclinaison et le lacet du véhicule. Cela normalise le flux d’images pour tenir compte des différentes façons dont les utilisateurs montent leurs appareils sur leurs pare-brises.</p></li>
+<li><p><strong>Paramsd</strong> <em>(/selfdrive/locationd/paramds.py)</em>: Il existe de nombreux paramètres spécifiques aux modèles de voitures (masse, rapport de direction, rigidité des pneus, décalage de direction, distance du centre de masse à l’axe des roues, etc.) qui sont nécessaires pour convertir un trajet de conduite en signaux que la voiture comprend, comme l’angle de direction. Une grande partie de ces paramètres sont codés en durs et sont considérés comme des constantes. Cependant, certains de ces paramètres sont soit inexactes, changent au cours de la vie d’une voiture, ou même pendant une conduite en fonction des conditions de la route. Il est donc nécessaire d’estimer précisément ces paramètres pour mieux contrôler la façon dont la voiture réagit aux entrées. Nous utilisons un filtre de Kalman (car_kf) pour cela, en supposant un modèle de véhicule à voie unique.</p></li>
+</ul>
+</section>
+<section id="controle">
+<h2>Contrôle<a class="headerlink" href="#controle" title="Lien vers cette rubrique"></a></h2>
+<ul class="simple">
+<li><p><strong>radard</strong> <em>(/selfdrive/controls/radar.py)</em>: Ce service interprète les données brutes provenant des différents radars présents sur les modèles de voitures et les convertit en un format canonique.</p></li>
+<li><p><strong>plannerd</strong> <em>(/selfdrive/controls/plannerd.py)</em>: La planification est séparée en deux parties : la planification latérale (direction) et la planification longitudinale (accélérateur/frein). Les deux utilisent un résolveur MPC (Contrôle Prédictif Modélisé) pour garantir que les plans soient fluides et optimisent des coûts raisonnables. Le réseau neuronal de conduite prédit où la voiture devrait être, mais le planificateur latéral détermine comment y parvenir. En utilisant la prédiction de trajectoire du réseau neuronal (et parfois la prédiction des lignes de voie), et un résolveur MPC, le planificateur latéral estime combien la voiture doit tourner (courbure) dans les prochaines secondes.La planification longitudinale dépend encore principalement des voitures de tête. Elle prend les estimations fusionnées (réseau neuronal + radar) des voitures de tête et la vitesse cible souhaitée, les insère dans un résolveur MPC, et calcule un bon profil d’accélération pour les prochaines secondes.</p></li>
+<li><p><strong>controlsd</strong> <em>(/selfdrive/controls/controlsd.py)</em>: C’est le service qui contrôle réellement la voiture. Il reçoit le plan du service <em>plannerd</em>, sous forme de courbures et de vitesses/accélérations, et le convertit en signaux de contrôle. Ces cibles agnostiques au véhicule (accélération et angle de direction) sont ensuite converties en commandes CAN spécifiques au véhicule, qui fonctionnent avec l’API de cette voiture, à travers un système de contrôle en boucle fermée qui fonctionne à 100Hz. Controlsd analyse également les données brutes du CAN de la voiture et les publie dans un format canonique.</p></li>
+</ul>
+</section>
+<section id="sevices-systemes-journalisation-et-divers">
+<h2>Sevices systèmes, journalisation et divers<a class="headerlink" href="#sevices-systemes-journalisation-et-divers" title="Lien vers cette rubrique"></a></h2>
+<ul class="simple">
+<li><p><strong>manager</strong> <em>(/system/manager)</em>: Ce service gère le démarrage et l’arrêt de tous les processus décrits ci-dessus.</p></li>
+<li><p><strong>loggerd/ logcatd/ proclogd</strong> <em>(/system/)</em>: Ces services gèrent l’enregistrement de tous les logs d’openpilot. Les données vidéo compressées et les données des capteurs sont enregistrées comme données d’entraînement, afin de continuer à améliorer les réseaux neuronaux. Tous les messages Cereal, rapports de plantage système, etc. sont également enregistrés afin de comprendre et de résoudre les pannes.</p></li>
+<li><p><strong>athenad</strong> <em>(/system/athenad)</em>: Etablit une connexion websocket avec les serveurs comma.ai et gère toutes les demandes liées au dispositif venant de connect.comma.ai. Le dispositif peut être atteint en envoyant des appels API REST à athena.comma.ai. Exemples d’appels API possibles : demander la tension de la batterie, définir une destination de navigation, obtenir la localisation de la voiture ou des demandes pour télécharger des fichiers.</p></li>
+<li><p><strong>ui</strong> <em>(/selfdrive/ui)</em>: Ce service gère tout ce qui est affiché à l’utilisateur. Lorsque la voiture est éteinte, il contient un guide de formation pour intégrer les nouveaux utilisateurs, affiche l’état du système et expose certains paramètres. Lorsque la voiture est allumée, le flux de la caméra orientée vers la route est affiché avec des visualisations superposées du chemin de conduite, des lignes de voie et des voitures de tête.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="capteurs_actionneurs.html" class="btn btn-neutral float-left" title="Services" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lucas Pichon &amp; Louis Leroy.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
