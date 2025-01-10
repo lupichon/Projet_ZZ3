@@ -80,12 +80,12 @@
   <section id="comment-fonctionne-openpilot">
 <h1>Comment fonctionne OpenPilot ?<a class="headerlink" href="#comment-fonctionne-openpilot" title="Lien vers cette rubrique"></a></h1>
 <p>Essentiellement, OpenPilot lit les données provenant de divers capteurs (caméra, IMU, capteur d’angle du volant, récepteur GNSS, etc.), traite leurs sorties et envoie des entrées pertinentes à un grand réseau de neurones. Ce dernier transforme les sorties en commandes exploitables pour les actionneurs du véhicule. Un autre aspect essentiel est de s’assurer que les conducteurs restent attentifs lorsque le système est activé.</p>
-<p>Pour que OpenPilot fonctionne, plusieurs bibliothèques open source ont également été développées, notamment :</p>
+<p>Pour qu” OpenPilot fonctionne, plusieurs bibliothèques open source ont également été développées, notamment :</p>
 <ul class="simple">
 <li><p><strong>opendbc</strong> : bibliothèque pour interpréter le trafic sur le bus CAN.</p></li>
 <li><p><strong>panda</strong> : interface pour les véhicules.</p></li>
 <li><p><strong>cereal</strong> : spécification de messagerie éditeur/abonné pour les systèmes robotiques.</p></li>
-<li><p><strong>rednose</strong> : bibliothèque de filtre de Kalman pour l’odométrie visuelle, le SLAM, etc.</p></li>
+<li><p><strong>rednose</strong> : bibliothèque de filtres de Kalman pour l’odométrie visuelle, le SLAM, etc.</p></li>
 </ul>
 <p>OpenPilot est composé de différents services qui communiquent entre eux via un système de messagerie inter-processus à un éditeur et plusieurs abonnés (spécifié dans cereal). Ces services peuvent être classés comme suit :</p>
 <ul class="simple">

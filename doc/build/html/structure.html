@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scripts &mdash; Documentation Documentation Openpilot 1.0</title>
+  <title>Services &mdash; Documentation Documentation Openpilot 1.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -48,8 +48,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Structure</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Scripts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#capteurs-et-actionneurs">Capteurs et actionneurs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Services</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#reseaux-de-neurones">Réseaux de neurones</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#localisation-et-calibration">Localisation et calibration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#controle">Contrôle</a></li>
@@ -63,6 +62,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#doc">doc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#msgq-repo">msgq_repo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#opendbc-repo">opendbc_repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#panda">panda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rednose-repo">rednose_repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#selfdrive">selfdrive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system">system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#teleoprtc-repo">teleoprtc_repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#third-party">third_party</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tinygrad-repo">tinygrad_repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tools">tools</a></li>
 </ul>
 </li>
 </ul>
@@ -81,7 +88,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Scripts</li>
+      <li class="breadcrumb-item active">Services</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/structure.rst.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
@@ -91,24 +98,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="scripts">
-<h1>Scripts<a class="headerlink" href="#scripts" title="Lien vers cette rubrique"></a></h1>
-<p>Cette partie traite des différents scripts présents dans OpenPilot. Ces scripts communiquent grâce un système de publication/abonnement. La liste des services est située dans le fichier <em>/cereal/service.h</em></p>
-<section id="capteurs-et-actionneurs">
-<h2>Capteurs et actionneurs<a class="headerlink" href="#capteurs-et-actionneurs" title="Lien vers cette rubrique"></a></h2>
+  <section id="services">
+<h1>Services<a class="headerlink" href="#services" title="Lien vers cette rubrique"></a></h1>
+<p>Cette partie traite des différents scripts présents dans OpenPilot. Ces scripts communiquent grâce à un système de publication/abonnement. La liste des services est située dans le fichier /cereal/service.h
+Capteurs et actionneurs
+————————</p>
 <ul class="simple">
-<li><p><strong>camerad</strong> <em>(/system/camerad)</em>: Gère à la fois la caméra de la route et la caméra du conducteur (ainsi qu’une caméra supplémentaire grand angle pour la route sur le comma three), et prend en charge l’autofocus et l’autoexposition. La gestion des flux vidéos est assurée par les scripts <em>camera_common.cc</em>, <em>camera_common.h</em> et <em>camera_qcom2.cc</em>.</p></li>
-<li><p><strong>annotated_camera</strong> <em>(/selfdrive/ui/qt/onroad)</em>: Responsable de la mise à jour et du rendu de la fenêtre « onroad » (sur la route). Il sert de conteneur pour la mise à jour et le rendu de cette fenêtre, intégrant des éléments tels que les alertes sur la route, les informations du conducteur et les autres éléments de l’interface utilisateur liés à la conduite.</p></li>
-<li><p><strong>sensod</strong> <em>(/system/sensord)</em>:  Configure et lit les capteurs (gyroscope, accéléromètre, magnétomètre et capteurs de lumière).</p></li>
-<li><p><strong>micd</strong> <em>(/system)</em>: gestion d’un microphone pour mesurer la pression acoustique et calculer les niveaux de pression acoustique (SPL) dans le domaine sonore. Il applique également un filtrage A-weighting pour obtenir une approximation du niveau de bruit perçu par l’oreille humaine.</p></li>
+<li><p><strong>camerad</strong> <em>(/system/camerad)</em> : Gère à la fois la caméra de la route et la caméra du conducteur (ainsi qu’une caméra supplémentaire grand angle pour la route sur le comma three), et prend en charge l’autofocus et l’autoexposition. La gestion des flux vidéo est assurée par les scripts <em>camera_common.cc</em>, <em>camera_common.h</em> et <em>camera_qcom2.cc</em>.</p></li>
+<li><p><strong>annotated_camera</strong> <em>(/selfdrive/ui/qt/onroad)</em> : Responsable de la mise à jour et du rendu de la fenêtre « onroad » (sur la route). Il sert de conteneur pour la mise à jour et le rendu de cette fenêtre, intégrant des éléments tels que les alertes sur la route, les informations du conducteur et les autres éléments de l’interface utilisateur liés à la conduite.</p></li>
+<li><p><strong>sensod</strong> <em>(/system/sensord)</em> : Configure et lit les capteurs (gyroscope, accéléromètre, magnétomètre et capteurs de lumière).</p></li>
+<li><p><strong>micd</strong> <em>(/system)</em>: Gestion d’un microphone pour mesurer la pression acoustique et calculer les niveaux de pression acoustique (SPL) dans le domaine sonore. Il applique également un filtrage A-weighting pour obtenir une approximation du niveau de bruit perçu par l’oreille humaine.</p></li>
 </ul>
-</section>
 <section id="reseaux-de-neurones">
 <h2>Réseaux de neurones<a class="headerlink" href="#reseaux-de-neurones" title="Lien vers cette rubrique"></a></h2>
 <ul class="simple">
-<li><p><strong>modeld</strong> <em>(/selfdrive/modeld/modeld.py)</em>: Lit le flux d’images de visionipc (système de communication inter-processus pour échanger des images) dans le réseau de neurones principal de conduite. En utilisant ces données ainsi que les entrées de désir (changement de voie, etc.), le réseau de neurones tente de prédire où et comment conduire, dans les conditions données. <em>modeld</em> exécute le modèle supercombo, qui génère le chemin de conduite souhaité ainsi que d’autres métadonnées, y compris les lignes de voie, les voitures en tête, les bords de la route, et plus encore.</p></li>
-<li><p><strong>dmonitoringmodeld</strong> <em>(/selfdrive/modeld/dmonitoringmodeld.py)</em>: Exécute le dmonitoring_model en utilisant le flux d’images de la caméra orientée vers le conducteur et prédit la posture de la tête du conducteur, si ses yeux sont ouverts ou fermés, et s’il porte des lunettes de soleil. Cela permet de savoir que le conducteur est toujours attentif et qu’il est capable de reprendre la main à tout moment.</p></li>
-<li><p><strong>dmonitorind</strong> <em>(/selfdrive/monitoring/monitoring.py)</em>: Contient la logique permettant d’évaluer si le conducteur peut reprendre le contrôle si nécessaire. Sinon, il alerte le conducteur. Cette décision est basée sur les sorties du modèle de surveillance du conducteur, les informations sur la scène provenant du modèle de conduite, et quelques autres paramètres. Les conducteurs sont empêchés d’engager OpenPilot s’ils ont été distraits pendant de longues périodes.</p></li>
+<li><p><strong>modeld</strong> <em>(/selfdrive/modeld/modeld.py)</em> : Lit le flux d’images de visionipc (système de communication inter-processus pour échanger des images) dans le réseau de neurones principal de conduite. En utilisant ces données ainsi que les entrées de désir (changement de voie, etc.), le réseau de neurones tente de prédire où et comment conduire, dans les conditions données. <em>modeld</em> exécute le modèle supercombo, qui génère le chemin de conduite souhaité ainsi que d’autres métadonnées, y compris les lignes de voie, les voitures en tête, les bords de la route, et plus encore.</p></li>
+<li><p><strong>dmonitoringmodeld</strong> <em>(/selfdrive/modeld/dmonitoringmodeld.py)</em> : Exécute le dmonitoring_model en utilisant le flux d’images de la caméra orientée vers le conducteur et prédit la posture de la tête du conducteur, si ses yeux sont ouverts ou fermés, et s’il porte des lunettes de soleil. Cela permet de savoir que le conducteur est toujours attentif et qu’il est capable de reprendre la main à tout moment.</p></li>
+<li><p><strong>dmonitoringd</strong> <em>(/selfdrive/monitoring/monitoring.py)</em> : Contient la logique permettant d’évaluer si le conducteur peut reprendre le contrôle si nécessaire. Sinon, il alerte le conducteur. Cette décision est basée sur les sorties du modèle de surveillance du conducteur, les informations sur la scène provenant du modèle de conduite, et quelques autres paramètres. Les conducteurs sont empêchés d’engager OpenPilot s’ils ont été distraits pendant de longues périodes.</p></li>
 </ul>
 </section>
 <section id="localisation-et-calibration">
@@ -117,7 +123,7 @@
 <li><p><strong>ubloxd</strong> <em>(/system/ubloxd)</em>: Analyse les données GNSS, qui sont ensuite utilisées pour la localisation.</p></li>
 <li><p><strong>locationd</strong> <em>(/selfdrive/locationd/locationd.py)</em>: Responsable de la localisation de la voiture dans le monde. La localisation est une étape essentielle pour décrire avec précision l’état de la voiture et son interaction avec le monde. C’est ainsi qu’OpenPilot connaît la vitesse, la présence d’un virage incliné ou si d’une pente. Ces données provenant de plusieurs capteurs sont combinées avec un filtre de Kalman (live_kf). Ce localisateur fournit la position, l’orientation, la vitesse, la vitesse angulaire et l’accélération de la voiture.</p></li>
 <li><p><strong>calibrationd</strong> <em>(/selfdrive/locationd/calibrationd.py)</em>: L’entrée du modèle de conduite neuronal est transformée dans le cadre calibré, qui est aligné avec l’inclinaison et le lacet du véhicule. Cela normalise le flux d’images pour tenir compte des différentes façons dont les utilisateurs montent leurs appareils sur leurs pare-brises.</p></li>
-<li><p><strong>paramsd</strong> <em>(/selfdrive/locationd/paramds.py)</em>: Il existe de nombreux paramètres spécifiques aux modèles de voitures (masse, rapport de direction, rigidité des pneus, décalage de direction, distance du centre de masse à l’axe des roues, etc.) qui sont nécessaires pour convertir un trajet de conduite en signaux que la voiture comprend, comme l’angle de direction. Une grande partie de ces paramètres sont codés en durs et sont considérés comme des constantes. Cependant, certains de ces paramètres sont soit inexactes, changent au cours de la vie d’une voiture, ou même pendant une conduite en fonction des conditions de la route. Il est donc nécessaire d’estimer précisément ces paramètres pour mieux contrôler la façon dont la voiture réagit aux entrées. Nous utilisons un filtre de Kalman (car_kf) pour cela, en supposant un modèle de véhicule à voie unique.</p></li>
+<li><p><strong>paramsd</strong> <em>(/selfdrive/locationd/paramds.py)</em>: Il existe de nombreux paramètres spécifiques aux modèles de voitures (masse, rapport de direction, rigidité des pneus, décalage de direction, distance du centre de masse à l’axe des roues, etc.) qui sont nécessaires pour convertir un trajet de conduite en signaux que la voiture comprend, comme l’angle de direction. Une grande partie de ces paramètres sont codés en dur et sont considérés comme des constantes. Cependant, certains de ces paramètres sont soit inexactes, changent au cours de la vie d’une voiture, ou même pendant une conduite en fonction des conditions de la route. Il est donc nécessaire d’estimer précisément ces paramètres pour mieux contrôler la façon dont la voiture réagit aux entrées. Nous utilisons un filtre de Kalman (car_kf) pour cela, en supposant un modèle de véhicule à voie unique.</p></li>
 <li><p><strong>pigeond</strong> <em>(/system/ubloxd/)</em>: Gère des interactions avec un récepteur GNSS Ublox via un port série. Ce récepteur est utilisé pour recevoir et envoyer des messages de configuration, de commande et d’initialisation. Il y a également des fonctionnalités pour gérer l’alimentation du récepteur, envoyer des messages de type UBX, configurer la vitesse de transmission, et récupérer ou envoyer des données liées à l’ublox, telles que les informations de position, le temps, ou les messages d’assistance.</p></li>
 <li><p><strong>qcomgpsd</strong> <em>(/system/)</em>: Gère la configuration, la collecte et la gestion des données GPS à partir d’un modem Qualcomm.</p></li>
 <li><p><strong>torqued</strong> <em>(/selfdrive/locationd)</em>: Destiné à estimer et ajuster les paramètres du système de contrôle latéral du véhicule (torque), en utilisant des données en temps réel et en ajustant dynamiquement les calculs de friction et d’accélération latérale en fonction des conditions de conduite.</p></li>
@@ -149,7 +155,7 @@
 <li><p><strong>pandad</strong> <em>(/selfdrive.pandad)</em>: Gère la gestion des cartes Panda. Son rôle principal est de maintenir les cartes Panda à jour, de vérifier leur état de fonctionnement et de gérer les processus de récupération en cas de défaillance.</p></li>
 <li><p><strong>selfdrived</strong> <em>(/selfdrive/selfdrived)</em>: Surveille en permanence le véhicule, déclenche des événements en fonction de la situation, et assure la gestion des alertes pour les éventuels dysfonctionnements.</p></li>
 <li><p><strong>timed</strong> <em>(/system)</em>: Synchronise l’heure système avec celle obtenue à partir d’un service GPS.</p></li>
-<li><p><strong>soundd</strong> <em>(/selfdrive/ui/soundd)</em>: Module responsbale de la gestion des alertes sonores.</p></li>
+<li><p><strong>soundd</strong> <em>(/selfdrive/ui/soundd)</em>: Module responsable de la gestion des alertes sonores.</p></li>
 </ul>
 </section>
 <section id="interation-entre-les-scripts">
@@ -193,7 +199,7 @@
 </section>
 <section id="doc">
 <h2>doc<a class="headerlink" href="#doc" title="Lien vers cette rubrique"></a></h2>
-<p>Contient un ensemble de fichier .md.</p>
+<p>Contient un ensemble de fichiers .md.</p>
 </section>
 <section id="msgq-repo">
 <h2>msgq_repo<a class="headerlink" href="#msgq-repo" title="Lien vers cette rubrique"></a></h2>
@@ -205,11 +211,71 @@
 <blockquote>
 <div><ul class="simple">
 <li><p><strong>opendbc_repo/opendebc/dbc</strong> : Répertoire de fichiers DBC.</p></li>
-<li><p><strong>opendbc_repo/opendebc/can</strong> : Bibliothèque poour analyser et constuire des messages CAN à partir de fichier DBC.</p></li>
+<li><p><strong>opendbc_repo/opendebc/can</strong> : Bibliothèque pour analyser et constuire des messages CAN à partir de fichier DBC.</p></li>
 <li><p><strong>opendbc_repo/opendebc/car</strong> : Bibliothèque de haut niveau pour interfacer avec des voitures en utilisant Python.</p></li>
 </ul>
 </div></blockquote>
-<p>A compléter !!!!!</p>
+</section>
+<section id="panda">
+<h2>panda<a class="headerlink" href="#panda" title="Lien vers cette rubrique"></a></h2>
+<p>Gère le firmware du dongle Panda et assure une communication CAN sécurisée entre openpilot et le véhicule, la validation du code pour éviter tout dysfonctionnement et la possibilité de personnaliser les fonctionnalités en compilant son propre firmware.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>board</strong> : Code pour la carte STM32</p></li>
+<li><p><strong>drivers</strong> : Drivers</p></li>
+<li><p><strong>python</strong> : Bibliothèque utilisateur Python pour interagir avec le Panda</p></li>
+<li><p><strong>tests</strong> : Tests et programmes d’aide pour le Panda</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="rednose-repo">
+<h2>rednose_repo<a class="headerlink" href="#rednose-repo" title="Lien vers cette rubrique"></a></h2>
+<p>Bibliothèque de filtre de Kalman pour l’odométrie visuelle, le SLAM, etc.</p>
+</section>
+<section id="selfdrive">
+<h2>selfdrive<a class="headerlink" href="#selfdrive" title="Lien vers cette rubrique"></a></h2>
+<p>Contient divers scripts pour la conduite autonome. Les différents répertoires ont déjà été évoqués dans la partie script.</p>
+</section>
+<section id="system">
+<h2>system<a class="headerlink" href="#system" title="Lien vers cette rubrique"></a></h2>
+<p>Contient des éléments qui gèrent l’infrastructure de base du système. Là aussi les différents répertoires ont déjà été évoqués dans la partie script.</p>
+</section>
+<section id="teleoprtc-repo">
+<h2>teleoprtc_repo<a class="headerlink" href="#teleoprtc-repo" title="Lien vers cette rubrique"></a></h2>
+<p>Fournit un ensemble d’abstractions pour la communication via WebRTC avec openpilot.</p>
+</section>
+<section id="third-party">
+<h2>third_party<a class="headerlink" href="#third-party" title="Lien vers cette rubrique"></a></h2>
+<p>Contient des bibliothèques et des dépendances externes qui sont utilisées dans le projet.</p>
+</section>
+<section id="tinygrad-repo">
+<h2>tinygrad_repo<a class="headerlink" href="#tinygrad-repo" title="Lien vers cette rubrique"></a></h2>
+<p>C’est un framework de deep learning qui permet ici de prédire le comportement de conduite.</p>
+</section>
+<section id="tools">
+<h2>tools<a class="headerlink" href="#tools" title="Lien vers cette rubrique"></a></h2>
+<p>Contient divers outils comme des scripts d’installation ou encore de simulation.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>bodyteleop</strong> : Permet l’interaction avec le comma via une interface web</p></li>
+<li><p><strong>ubuntu_setup.sh</strong> : Script pour l’installation sur Ubuntu</p></li>
+<li><p><strong>mac_setup.sh</strong> : Script pour l’installation sur Mac</p></li>
+<li><p><strong>cabana</strong> : Afficher et tracer les messages CAN provenant des entraînements ou en temps réel</p></li>
+<li><p><strong>camerastream</strong> : Streaming des caméras sur le réseau</p></li>
+<li><p><strong>car_porting</strong> : Améliore l’intégration des véhicules à openpilot</p></li>
+<li><p><strong>joystick</strong> : Contrôler la voiture avec un joystick</p></li>
+<li><p><strong>latencylogger</strong> : Analyse la latence d’openpilot</p></li>
+<li><p><strong>lib</strong> : Des bibliothèques pour prendre en charge les outils et lire les journaux d’openpilot</p></li>
+<li><p><strong>longitudinale_maneuvers</strong> : Implémentation d’un système de contrôle longitudinale basé sur des actions prédéfinies</p></li>
+<li><p><strong>plotjuggler</strong> : Outil pour les logs d’openpilot</p></li>
+<li><p><strong>replay</strong> : Rejouer des trajets et simuler des services openpilot</p></li>
+<li><p><strong>rerun</strong> : Permet de visualiser et analyser les logs</p></li>
+<li><p><strong>scripts</strong> : Drivers</p></li>
+<li><p><strong>sim</strong> : Lancer openpilot dans un simulateur</p></li>
+<li><p><strong>tuning</strong> : Outil pour mesurer la précision de la direction du véhicule</p></li>
+<li><p><strong>webcam</strong> : Lancer openpilot sur un pc avec une webcam</p></li>
+</ul>
+</div></blockquote>
 </section>
 </section>
 
